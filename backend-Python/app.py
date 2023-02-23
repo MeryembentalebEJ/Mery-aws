@@ -1,92 +1,85 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
+from pymongo import MongoClient
 
-app = Flask(__name__)
-CORS(app)
+class EmployeeAPI:
+    def __init__(self, app, client):
+        self.app = app
+        self.client = client
+        self.db = client["employee_db"]
+        self.col = self.db["employees"]
+        
+        # permettre l'accès depuis n'importe quelle origine
+        CORS(self.app)
+        
+        # définir les routes de l'API
+        self.app.add_url_rule('/api/v1/employees', view_func=self.get_employees, methods=['GET'])
+        self.app.add_url_rule('/api/v1/employees', view_func=self.add_employee, methods=['POST'])
+        self.app.add_url_rule('/api/v1/employees/<int:employee_id>', view_func=self.get_employee, methods=['GET'])
+        self.app.add_url_rule('/api/v1/employees/<int:employee_id>', view_func=self.delete_employee, methods=['DELETE'])
+        self.app.add_url_rule('/api/v1/employees/<int:employee_id>', view_func=self.update_employee, methods=['PUT'])
+    
+    def get_employees(self):
+        cursor = self.col.find({}, {'_id': 0})
+        liste = [i for i in cursor]
+        response = jsonify(liste)
+        return make_response(response, 200)
+    
+    def add_employee(self):
+        data = request.get_json()
+        cursor = self.col.find({}, {'_id': 0})
+        liste = [i for i in cursor]            
+        try:
+            data['id'] = liste[-1]['id'] + 1  
+        except:
+            data['id'] = 1
+        self.col.insert_one(data).inserted_id
+        del data['_id'] # Permet de serialiser le JSON par le suite
+        response = jsonify(data)
+        return make_response(response, 200)
+    
+    def get_employee(self, employee_id):
+        cursor = self.col.find({'id': employee_id}, {'_id': 0})
+        employee = cursor.next()
+        response = jsonify(employee)
+        return make_response(response, 200)
+    
+    def delete_employee(self, employee_id):
+        cursor = self.col.find({'id': employee_id}, {'_id': 0})
+        employee = cursor.next()
+        if employee:
+            self.col.delete_one({'id': employee_id})
+            response = jsonify()
+            return make_response(response, 204)
+        else:
+            error = {'error': f'Employee with id {employee_id} not found'}
+            response = jsonify(error)
+            return make_response(response, 404)
+    
+    def update_employee(self, employee_id):
+        employee = self.col.find_one({'id': employee_id})
+        if not employee:
+            error = {'error': f'Employee with id {employee_id} not found'}
+            response = jsonify(error)
+            return make_response(response, 404)
+        else:
+            data = request.get_json()
+            self.col.update_one(
+                {'id': employee_id},    
+                {
+                    "$set": {
+                        'firstName': data.get('firstName', employee['firstName']),
+                        'lastName': data.get('lastName', employee['lastName']),
+                        'emailId': data.get('emailId', employee['emailId'])
+                    }
+                }
+            )
+            response = jsonify()
+            return make_response(response, 204)
 
-# List in python to test the API
-employees=[
-   {
-        'id': 0,
-        'lastName': 'Meryem',
-        'firstName': 'Bentaleb',
-        'emailId': 'meryembent@gmail.com'
-    },
-    {
-        'id': 1,
-        'lastName': 'Hassna',
-        'firstName': 'hassnaoui',
-        'emailId': 'hassnaoui@gmail.com'
-    },
-    {
-        'id': 2,
-        'lastName': 'Bouchra',
-        'firstName': 'Aliout',
-        'emailId': 'Bibouch@gmail.com'
-    },
-    {
-        'id': 3,
-        'lastName': 'Ayoub',
-        'firstName': 'El Jadil',
-        'emailId': 'ayoubel@gmail.com'
-    },
-    {
-        'id': 4,
-        'lastName': 'Katherine',
-        'firstName': 'Derin',
-        'emailId': 'dkatherine@gmail.com'
-    }
-]
-
-#Method GET on all employees
-@app.route('/api/v1/employees', methods=['GET'])
-def manage_employees():
-    return jsonify(employees)
-
-#Method POST to create user
-@app.route('/api/v1/employees', methods=['POST'])
-def create_employees():
-    new_employee = {
-            'id': employees[-1]['id'] + 1,
-            'lastName': request.json['lastName'],
-            'firstName': request.json['firstName'],
-            'emailId': request.json['emailId']
-        }
-    employees.append(new_employee)
-    return jsonify(new_employee), 201
-
-
-#Method GET employees with ID
-@app.route('/api/v1/employees/<int:id>', methods=['GET'])
-def get_entry(id):
-    # Rechercher l'entrée avec l'ID spécifié
-    for entry in employees:
-        if entry['id'] == id:
-            return jsonify(entry)
-    # Si l'entrée n'a pas été trouvée   
-    return jsonify({'error': 'L\'entree n\'a pas ete trouvee.'}), 404
-
-#Method DELETE employees with ID
-@app.route('/api/v1/employees/<int:id>', methods=['DELETE'])
-def delete_entry(id):
-    # Find entry in employees with the ID
-    for entry in employees:
-        if entry['id'] == id:
-            employees.remove(entry) 
-            return jsonify({'message': 'L\'entree a été supprimee.'})
-    # If entry not find
-    return jsonify({'error': 'L\'entree n\'a pas ete trouvee.'}), 404
-
-#Method PUT modify emp data with ID
-@app.route('/api/v1/employees/<int:id>', methods=['PUT'])
-def modify_user(id):
-    for entry in employees:
-        if entry['id'] == id:
-            entry['lastName'] = request.json['lastName']
-            entry['firstName'] = request.json['firstName']
-            entry['emailId'] = request.json['emailId']
-            return jsonify({'message': 'User updated successfully.'}), 200
-    return jsonify({'message': 'User not found.'}), 404
+app = Flask('__name__')
+client = MongoClient('mongodb://root:example@mongo:27017/')
+api = EmployeeAPI(app, client)
 
 if __name__ == '__main__':
     app.run(debug=True)
