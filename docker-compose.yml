@@ -1,0 +1,27 @@
+---
+version: "2.1"
+services:
+  frontend-angular:
+    image: frontend-angular
+    container_name: frontend-angular
+    build:
+      context: ./angular
+      dockerfile: Dockerfile
+    ports:
+      - 4200:4200
+      - 80:80
+    environment:
+      - PGUID=1000
+      - PGID=1000
+    restart: unless-stopped
+    
+  
+  backend-python:
+    image: backend-python
+    container_name: backend-python
+    build:
+      context: ./backend-Python
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    restart: unless-stopped

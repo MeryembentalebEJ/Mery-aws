@@ -1,59 +1,92 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-products = [
+# List in python to test the API
+employees=[
+   {
+        'id': 0,
+        'lastName': 'Meryem',
+        'firstName': 'Bentaleb',
+        'emailId': 'meryembent@gmail.com'
+    },
     {
         'id': 1,
-        'title': 'Product 1',
-        'description': 'This is the first product',
-        'price': 9.99,
-        'image': 'https://example.com/product1.jpg'
+        'lastName': 'Hassna',
+        'firstName': 'hassnaoui',
+        'emailId': 'hassnaoui@gmail.com'
     },
     {
         'id': 2,
-        'title': 'Product 2',
-        'description': 'This is the second product',
-        'price': 19.99,
-        'image': 'https://example.com/product2.jpg'
+        'lastName': 'Bouchra',
+        'firstName': 'Aliout',
+        'emailId': 'Bibouch@gmail.com'
     },
     {
         'id': 3,
-        'title': 'Product 3',
-        'description': 'This is the third product',
-        'price': 29.99,
-        'image': 'https://example.com/product3.jpg'
+        'lastName': 'Ayoub',
+        'firstName': 'El Jadil',
+        'emailId': 'ayoubel@gmail.com'
+    },
+    {
+        'id': 4,
+        'lastName': 'Katherine',
+        'firstName': 'Derin',
+        'emailId': 'dkatherine@gmail.com'
     }
 ]
 
-@app.route('/products', methods=['GET', 'POST'])
-def manage_products():
-    if request.method == 'GET':
-        return jsonify({'products': products})
+#Method GET on all employees
+@app.route('/api/v1/employees', methods=['GET'])
+def manage_employees():
+    return jsonify(employees)
 
-    if request.method == 'POST':
-        product = {
-            'id': products[-1]['id'] + 1,
-            'title': request.json['title'],
-            'description': request.json['description'],
-            'price': request.json['price'],
-            'image': request.json['image']
+#Method POST to create user
+@app.route('/api/v1/employees', methods=['POST'])
+def create_employees():
+    new_employee = {
+            'id': employees[-1]['id'] + 1,
+            'lastName': request.json['lastName'],
+            'firstName': request.json['firstName'],
+            'emailId': request.json['emailId']
         }
-        products.append(product)
-        return jsonify({'product': product}), 201
+    employees.append(new_employee)
+    return jsonify(new_employee), 201
 
-@app.route('/product/<int:product_id>', methods=['GET', 'DELETE'])
-def manage_product(product_id):
-    product = [product for product in products if product['id'] == product_id]
-    if len(product) == 0:
-        return jsonify({'error': 'Product not found here'})
 
-    if request.method == 'GET':
-        return jsonify({'product': product[0]})
+#Method GET employees with ID
+@app.route('/api/v1/employees/<int:id>', methods=['GET'])
+def get_entry(id):
+    # Rechercher l'entrée avec l'ID spécifié
+    for entry in employees:
+        if entry['id'] == id:
+            return jsonify(entry)
+    # Si l'entrée n'a pas été trouvée   
+    return jsonify({'error': 'L\'entree n\'a pas ete trouvee.'}), 404
 
-    if request.method == 'DELETE':
-        products.remove(product[0])
-        return jsonify({'result': 'Product deleted'})
+#Method DELETE employees with ID
+@app.route('/api/v1/employees/<int:id>', methods=['DELETE'])
+def delete_entry(id):
+    # Find entry in employees with the ID
+    for entry in employees:
+        if entry['id'] == id:
+            employees.remove(entry) 
+            return jsonify({'message': 'L\'entree a été supprimee.'})
+    # If entry not find
+    return jsonify({'error': 'L\'entree n\'a pas ete trouvee.'}), 404
+
+#Method PUT modify emp data with ID
+@app.route('/api/v1/employees/<int:id>', methods=['PUT'])
+def modify_user(id):
+    for entry in employees:
+        if entry['id'] == id:
+            entry['lastName'] = request.json['lastName']
+            entry['firstName'] = request.json['firstName']
+            entry['emailId'] = request.json['emailId']
+            return jsonify({'message': 'User updated successfully.'}), 200
+    return jsonify({'message': 'User not found.'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
