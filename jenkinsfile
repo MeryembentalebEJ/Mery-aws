@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Merge to Dev') {
             steps {
-                sh 'git checkout Dev && git merge origin/jenkins'
+                sh 'git checkout dev_branch && git merge origin/jenkins'
             }
         }
         stage('Deploy to Dev') {
