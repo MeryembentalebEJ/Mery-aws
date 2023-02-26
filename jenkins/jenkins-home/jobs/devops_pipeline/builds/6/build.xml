@@ -284,11 +284,12 @@
     }
 }</script>
     <loadedScripts class="map"/>
+    <persistedClean>true</persistedClean>
     <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
     <timings class="concurrent-hash-map">
       <entry>
         <string>flowNode</string>
-        <long>1359714164</long>
+        <long>1537631820</long>
       </entry>
       <entry>
         <string>classLoad</string>
@@ -308,10 +309,11 @@
       </entry>
     </timings>
     <sandbox>true</sandbox>
-    <iota>45</iota>
-    <head>1:45</head>
+    <iota>48</iota>
+    <head>46:48</head>
     <done>true</done>
     <resumeBlocked>false</resumeBlocked>
+    <storageDir>workflow-fallback</storageDir>
   </execution>
   <completed>true</completed>
   <checkouts class="hudson.util.PersistedList">
