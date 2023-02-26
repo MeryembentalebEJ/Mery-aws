@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<l:dependencies xmlns:l='licenses' groupId='org.jenkins-ci.plugins' artifactId='pyenv-pipeline' version='2.1.2'><l:dependency name='Pyenv Pipeline Plugin' groupId='org.jenkins-ci.plugins' artifactId='pyenv-pipeline' version='2.1.2' url='https://wiki.jenkins.io/display/JENKINS/Pyenv+Pipeline+Plugin'><l:description>Exposes a step in Jenkins Pipeline DSL for executing commands within a specified Python virtualenv</l:description><l:license name='MIT License' url='http://opensource.org/licenses/MIT'/></l:dependency></l:dependencies>

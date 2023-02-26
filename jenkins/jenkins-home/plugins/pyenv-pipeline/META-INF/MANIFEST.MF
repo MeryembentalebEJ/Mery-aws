@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: Colin
+Build-Jdk: 1.8.0_181
+Extension-Name: pyenv-pipeline
+Specification-Title: Exposes a step in Jenkins Pipeline DSL for execut
+ ing commands within a specified Python virtualenv
+Implementation-Title: pyenv-pipeline
+Implementation-Version: 2.1.2
+Group-Id: org.jenkins-ci.plugins
+Short-Name: pyenv-pipeline
+Long-Name: Pyenv Pipeline Plugin
+Url: https://wiki.jenkins.io/display/JENKINS/Pyenv+Pipeline+Plugin
+Plugin-Version: 2.1.2
+Hudson-Version: 1.651.2
+Jenkins-Version: 1.651.2
+Plugin-Dependencies: workflow-durable-task-step:2.11,workflow-step-api
+ :2.9
+Plugin-Developers: Colin Starner:cstarner:colin.starner@gmail.com
+
