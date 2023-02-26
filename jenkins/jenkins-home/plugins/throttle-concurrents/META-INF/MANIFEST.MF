@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 11
+Specification-Title: Jenkins Throttle Concurrent Builds Plug-in
+Specification-Version: 2.11
+Implementation-Title: Jenkins Throttle Concurrent Builds Plug-in
+Implementation-Version: 2.11
+Group-Id: org.jenkins-ci.plugins
+Short-Name: throttle-concurrents
+Long-Name: Jenkins Throttle Concurrent Builds Plug-in
+Url: https://github.com/jenkinsci/throttle-concurrent-builds-plugin
+Plugin-Version: 2.11
+Hudson-Version: 2.361.4
+Jenkins-Version: 2.361.4
+Plugin-Dependencies: workflow-api:1208.v0cc7c6e0da_9e,workflow-durable-t
+ ask-step:1223.v7f1a_98a_8863e,workflow-step-api:639.v6eca_cd8c04a_a_,wo
+ rkflow-support:839.v35e2736cfd5c,matrix-project:785.v06b_7f47b_c631
+Plugin-Developers: Andrew Bayer:abayer:andrew.bayer@gmail.com,Basil Crow
+ :basil:me@basilcrow.com,Oleg Nenashev:oleg_nenashev:o.v.nenashev@gmail.
+ com
+Plugin-License-Name: MIT License
+Plugin-License-Url: https://opensource.org/licenses/MIT
+Plugin-ScmUrl: https://github.com/jenkinsci/throttle-concurrent-builds-p
+ lugin
+

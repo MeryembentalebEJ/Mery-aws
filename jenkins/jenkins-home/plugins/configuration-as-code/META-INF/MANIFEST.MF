@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 11
+Specification-Title: Configuration as Code Plugin
+Specification-Version: 0.0
+Implementation-Title: Configuration as Code Plugin
+Implementation-Version: 1569.vb_72405b_80249
+Group-Id: io.jenkins
+Short-Name: configuration-as-code
+Long-Name: Configuration as Code Plugin
+Url: https://github.com/jenkinsci/configuration-as-code-plugin
+Compatible-Since-Version: 1.28
+Plugin-Version: 1569.vb_72405b_80249
+Hudson-Version: 2.319.3
+Jenkins-Version: 2.319.3
+Plugin-Dependencies: caffeine-api:2.9.3-65.v6a_47d0f4d1fe,commons-text-a
+ pi:1.10.0-27.vb_fa_3896786a_7,snakeyaml-api:1.30.2-76.vc104f7ce9870
+Plugin-Developers: Joseph Petersen:jetersen:,Tim Jacomb:timja:,Oleg Nena
+ shev:oleg_nenashev:
+Plugin-License-Name: MIT License
+Plugin-License-Url: https://opensource.org/licenses/MIT
+Plugin-ChangelogUrl: https://github.com/jenkinsci/configuration-as-code-
+ plugin/releases
+Plugin-LogoUrl: https://raw.githubusercontent.com/jenkinsci/configuratio
+ n-as-code-plugin/master/plugin/src/main/webapp/img/logo-head.svg
+Plugin-ScmUrl: https://github.com/jenkinsci/configuration-as-code-plugin
+
