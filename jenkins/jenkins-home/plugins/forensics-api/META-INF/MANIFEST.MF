@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 17
+Specification-Title: Forensics API Plugin
+Specification-Version: 1.17
+Implementation-Title: Forensics API Plugin
+Implementation-Version: 1.17.0
+Group-Id: io.jenkins.plugins
+Short-Name: forensics-api
+Long-Name: Forensics API Plugin
+Url: https://github.com/jenkinsci/forensics-api-plugin
+Plugin-Version: 1.17.0
+Hudson-Version: 2.346.3
+Jenkins-Version: 2.346.3
+Plugin-Dependencies: bootstrap5-api:5.2.0-1,commons-lang3-api:3.12.0-36.
+ vd97de6465d5b_,commons-text-api:1.10.0-27.vb_fa_3896786a_7,data-tables-
+ api:1.12.1-4,echarts-api:5.4.0-1,font-awesome-api:6.2.1-1,jquery3-api:3
+ .6.1-2,plugin-util-api:2.20.0,workflow-api:1200.v8005c684b_a_c6,workflo
+ w-cps:3536.vb_8a_6628079d5,workflow-job:1207.ve6191ff089f8,workflow-mul
+ tibranch:716.vc692a_e52371b_,branch-api:2.1051.v9985666b_f6cc
+Plugin-Developers: Ullrich Hafner:uhafner:ullrich.hafner@gmail.com
+Plugin-License-Name: MIT license
+Plugin-ScmUrl: https://github.com/jenkinsci/forensics-api-plugin
+
